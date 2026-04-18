@@ -38,7 +38,7 @@ llm-testing-tower-defense/
 | Claude Haiku 4.5 | ✓ | ✓ | |
 | Claude Opus 4.7 | ✓ | ✓ | |
 | Claude Sonnet 4.6 | ✓ | ✓ | |
-| DeepSeek V3.2 | ✓ | ✓ | |
+| DeepSeek V3.2 | ✓ | ✓ | Developed with server infrastructure and documentation. Game runs smoothly; balance breaks around wave 7 due to excess currency. Level frame UI bug (off-screen). All features implemented. |
 | Gemma 4 31B | ✓ | ✓ | |
 | GLM 5.1 | ✓ | ✓ | |
 | Kimi K2.5 | ✓ | ✓ | |
