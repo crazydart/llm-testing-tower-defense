@@ -35,7 +35,7 @@ llm-testing-tower-defense/
 
 | Model | Tested | Success | Notes |
 |-------|--------|---------|-------|
-| Claude Haiku 4.5 | ✓ | ~ | Single HTML file. Auto-starts waves on page load (no player control). Severe balance issues with excessive currency earnings. Waves incorrectly go to 11/10. Tower placement allows placement on track (should be prevented). Jagged enemy path is unique but visually basic. [Waves 1, 3, 11](haiku/) |
+| Claude Haiku 4.5 | ✓ | ~ | Single HTML file. Auto-starts waves on page load (no player control). Severe balance issues with excessive currency earnings. Waves incorrectly go to 11/10. Tower placement allows placement on track (should be prevented). Jagged enemy path is unique but visually basic. [Wave 1](haiku/screenshot-wave1.png) [Wave 3](haiku/screenshot-wave3.png) [Wave 11](haiku/screenshot-wave11.png) |
 | Claude Opus 4.7 | ✓ | ✓ | Single HTML file implementation. Excellent with free tower placement (not grid-based). Well-balanced throughout all 10 waves. Good graphics and smooth performance. Tower radius visualization and collision detection both work correctly. All features implemented. [Screenshot](opus47/screenshot.png) |
 | Claude Sonnet 4.6 | ✓ | ✓ | Single HTML file. Grid-based tower placement with snap-to-grid mechanics. Limiting but works well and feels polished. Game UI centers on screen (distinguishing feature). Very balanced gameplay that becomes challenging. All features implemented. [Screenshot](sonnet46/screenshot.png) |
 | DeepSeek V3.2 | ✓ | ✓ | Developed with server infrastructure and documentation. Game runs smoothly; balance breaks around wave 7 due to excess currency. Level frame UI bug (off-screen). All features implemented. |
