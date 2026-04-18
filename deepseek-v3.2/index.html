@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tower Defense Game</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #fff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            color: #4cc9f0;
+            text-shadow: 0 0 10px rgba(76, 201, 240, 0.5);
+            margin-bottom: 10px;
+        }
+        
+        .game-area {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .game-board {
+            flex: 1;
+            min-width: 600px;
+            background: #0f3460;
+            border-radius: 10px;
+            border: 2px solid #4cc9f0;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(76, 201, 240, 0.2);
+        }
+        
+        #gameCanvas {
+            display: block;
+            background: #0d2847;
+        }
+        
+        .sidebar {
+            width: 300px;
+            background: #0f3460;
+            border-radius: 10px;
+            border: 2px solid #4cc9f0;
+            padding: 20px;
+            box-shadow: 0 0 20px rgba(76, 201, 240, 0.2);
+        }
+        
+        .stats {
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #4cc9f0;
+        }
+        
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+        
+        .currency {
+            color: #f0db4f;
+        }
+        
+        .waves {
+            color: #9d4edd;
+        }
+        
+        .lives {
+            color: #ff6b6b;
+        }
+        
+        .towers {
+            margin-bottom: 20px;
+        }
+        
+        .tower-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+        
+        .tower-card {
+            background: #16213e;
+            border: 2px solid transparent;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .tower-card:hover {
+            border-color: #4cc9f0;
+            transform: translateY(-2px);
+        }
+        
+        .tower-card.selected {
+            border-color: #f0db4f;
+            background: #1a1a2e;
+        }
+        
+        .tower-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin: 0 auto 10px;
+        }
+        
+        .tower-1 .tower-icon { background: linear-gradient(135deg, #4cc9f0, #4361ee); }
+        .tower-2 .tower-icon { background: linear-gradient(135deg, #f72585, #b5179e); }
+        .tower-3 .tower-icon { background: linear-gradient(135deg, #f0db4f, #f8961e); }
+        
+        .tower-name {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .tower-cost {
+            color: #f0db4f;
+            font-size: 14px;
+        }
+        
+        .tower-stats {
+            font-size: 12px;
+            color: #a9a9a9;
+            margin-top: 5px;
+        }
+        
+        .upgrades {
+            margin-top: 20px;
+        }
+        
+        .upgrade-btn {
+            width: 100%;
+            padding: 10px;
+            background: #9d4edd;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.2s;
+        }
+        
+        .upgrade-btn:hover:not(:disabled) {
+            background: #7b2cbf;
+        }
+        
+        .upgrade-btn:disabled {
+            background: #555;
+            cursor: not-allowed;
+        }
+        
+        .controls {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .control-btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .start-btn {
+            background: linear-gradient(135deg, #4cc9f0, #4361ee);
+            color: white;
+        }
+        
+        .start-btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .pause-btn {
+            background: linear-gradient(135deg, #f0db4f, #f8961e);
+            color: white;
+        }
+        
+        .pause-btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .enemy-info {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #4cc9f0;
+        }
+        
+        .enemy-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .enemy-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #16213e;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        
+        .enemy-icon {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+        }
+        
+        .enemy-1 .enemy-icon { background: #ff6b6b; }
+        .enemy-2 .enemy-icon { background: #7209b7; }
+        
+        .instructions {
+            margin-top: 20px;
+            padding: 15px;
+            background: #16213e;
+            border-radius: 8px;
+            border-left: 4px solid #4cc9f0;
+        }
+        
+        .instructions h3 {
+            margin-top: 0;
+            color: #4cc9f0;
+        }
+        
+        .instructions ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+        
+        .instructions li {
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Tower Defense Game</h1>
+            <p>Defend your base against waves of enemies!</p>
+        </header>
+        
+        <div class="game-area">
+            <div class="game-board">
+                <canvas id="gameCanvas" width="800" height="600"></canvas>
+            </div>
+            
+            <div class="sidebar">
+                <div class="stats">
+                    <div class="stat-item">
+                        <span>Currency:</span>
+                        <span class="currency" id="currency">150</span>
+                    </div>
+                    <div class="stat-item">
+                        <span>Wave:</span>
+                        <span class="waves" id="wave">0/10</span>
+                    </div>
+                    <div class="stat-item">
+                        <span>Lives:</span>
+                        <span class="lives" id="lives">20</span>
+                    </div>
+                </div>
+                
+                <div class="towers">
+                    <h3>Select Tower</h3>
+                    <div class="tower-grid">
+                        <div class="tower-card tower-1" data-type="basic" data-cost="50">
+                            <div class="tower-icon"></div>
+                            <div class="tower-name">Basic Tower</div>
+                            <div class="tower-cost">$50</div>
+                            <div class="tower-stats">Damage: 10 | Range: 150</div>
+                        </div>
+                        <div class="tower-card tower-2" data-type="splash" data-cost="75">
+                            <div class="tower-icon"></div>
+                            <div class="tower-name">Splash Tower</div>
+                            <div class="tower-cost">$75</div>
+                            <div class="tower-stats">Damage: 8 | Range: 100 | Splash</div>
+                        </div>
+                        <div class="tower-card tower-3" data-type="sniper" data-cost="100">
+                            <div class="tower-icon"></div>
+                            <div class="tower-name">Sniper Tower</div>
+                            <div class="tower-cost">$100</div>
+                            <div class="tower-stats">Damage: 25 | Range: 300 | Slow</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="upgrades">
+                    <button id="upgradeBtn" class="upgrade-btn" disabled>Upgrade Selected Tower ($50)</button>
+                </div>
+                
+                <div class="controls">
+                    <button id="startBtn" class="control-btn start-btn">Start Wave</button>
+                    <button id="pauseBtn" class="control-btn pause-btn">Pause</button>
+                </div>
+                
+                <div class="enemy-info">
+                    <h3>Enemies</h3>
+                    <div class="enemy-list">
+                        <div class="enemy-item enemy-1">
+                            <div class="enemy-icon"></div>
+                            <div>
+                                <strong>Grunt</strong><br>
+                                <small>HP: 50 | Speed: 2 | Reward: $10</small>
+                            </div>
+                        </div>
+                        <div class="enemy-item enemy-2">
+                            <div class="enemy-icon"></div>
+                            <div>
+                                <strong>Tank</strong><br>
+                                <small>HP: 150 | Speed: 1 | Reward: $30</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="instructions">
+                    <h3>How to Play</h3>
+                    <ul>
+                        <li>Click on a tower type to select it</li>
+                        <li>Click on the path to place the tower</li>
+                        <li>Click on a tower to select it for upgrades</li>
+                        <li>Upgrade towers between waves</li>
+                        <li>Start each wave when ready</li>
+                        <li>Defend your base for 10 waves!</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="game.js"></script>
+</body>
+</html>
