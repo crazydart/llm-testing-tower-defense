@@ -44,7 +44,7 @@ llm-testing-tower-defense/
 | Kimi K2.5 | ✓ | ✗ | Reasonable UX with clear tower selection. Critical bug: enemies cannot be killed - health goes negative instead of dying when reaching 0. Game becomes unplayable as enemies persist indefinitely despite taking damage. [Screenshot](kimi-k2.5/screenshot.png) |
 | MiniMax M2.7 | ✓ | ✓ | |
 | Qwen 3 Coder Next | ✓ | ✓ | |
-| Qwen 3.5 27B | ✓ | ✓ | |
+| Qwen 3.5 27B | ✓ | ✗ | Good UX with attractive gradient buttons. Tower placement has initial bug but works after multiple clicks. Critical issue: enemies take no damage and cannot be killed. Game is unplayable despite polished visuals. [Screenshot](qwen35-27b/screenshot.png) |
 | Qwen 3.5 35B | ✓ | ✗ | Good UX design with nice visuals, but has critical bugs. Crashes with "Cannot read properties of undefined (reading 'clientX')" - mouse event tracking not properly initialized. Requires server to run due to resource loading issues. [Screenshot](qwen35-35b-a3b/screenshot.png) |
 | Qwen 3.5 397B | ✓ | ~ | Good initial UX with polished design. Starts functional but deteriorates quickly. Visual glitch when clicking tower to upgrade (stretching effect). Click handling breaks after initial interaction - clicking towers places new towers instead of upgrading. Tower selection buttons buggy and unreliable. [Screenshot](qwen35-397b/screenshot.png) |
 
