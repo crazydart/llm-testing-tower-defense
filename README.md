@@ -45,7 +45,7 @@ llm-testing-tower-defense/
 | MiniMax M2.7 | ✓ | ✓ | |
 | Qwen 3 Coder Next | ✓ | ✓ | |
 | Qwen 3.5 27B | ✓ | ✓ | |
-| Qwen 3.5 35B | ✓ | ✓ | |
+| Qwen 3.5 35B | ✓ | ✗ | Good UX design with nice visuals, but has critical bugs. Crashes with "Cannot read properties of undefined (reading 'clientX')" - mouse event tracking not properly initialized. Requires server to run due to resource loading issues. [Screenshot](qwen35-35b-a3b/screenshot.png) |
 
 More models will be added over time.
 
