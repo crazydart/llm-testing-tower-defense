@@ -40,7 +40,7 @@ llm-testing-tower-defense/
 | Claude Sonnet 4.6 | ✓ | ✓ | Single HTML file. Grid-based tower placement with snap-to-grid mechanics. Limiting but works well and feels polished. Game UI centers on screen (distinguishing feature). Very balanced gameplay that becomes challenging. All features implemented. [Screenshot](sonnet46/screenshot.png) |
 | DeepSeek V3.2 | ✓ | ✓ | Developed with server infrastructure and documentation. Game runs smoothly; balance breaks around wave 7 due to excess currency. Level frame UI bug (off-screen). All features implemented. |
 | Gemma 4 31B | ✓ | ~ | Full-window UX. Click coordinate offset makes tower placement difficult and inaccurate. Unique design choice: tower placement disabled during waves (only allowed between waves). Clear UI with good tower descriptions. [Screenshot](gemma4-31b/screenshot.png) |
-| GLM 5.1 | ✓ | ✗ | Good UX with grid-based placement. Severe balance issue: starting with 30 gold but cheapest tower costs 50 gold, making it impossible to place any towers in wave 1. Game is unplayable from the start. Tower selection and upgrade UI are polished. [Screenshot](gml5/screenshot.png) |
+| GLM 5.1 | ✓ | ✓ | Good UX with grid-based placement. Challenging balance: starts with 30 gold but cheapest tower costs 50, making wave 1 difficult but winnable. Tower selection and upgrade UI are polished. All features implemented. [Screenshot](gml5/screenshot.png) |
 | Kimi K2.5 | ✓ | ✓ | |
 | MiniMax M2.7 | ✓ | ✓ | |
 | Qwen 3 Coder Next | ✓ | ✓ | |
