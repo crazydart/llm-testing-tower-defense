@@ -41,7 +41,7 @@ llm-testing-tower-defense/
 | DeepSeek V3.2 | ✓ | ✓ | Developed with server infrastructure and documentation. Game runs smoothly; balance breaks around wave 7 due to excess currency. Level frame UI bug (off-screen). All features implemented. |
 | Gemma 4 31B | ✓ | ~ | Full-window UX. Click coordinate offset makes tower placement difficult and inaccurate. Unique design choice: tower placement disabled during waves (only allowed between waves). Clear UI with good tower descriptions. [Screenshot](gemma4-31b/screenshot.png) |
 | GLM 5.1 | ✓ | ✓ | Good UX with grid-based placement. Challenging balance: starts with 30 gold but cheapest tower costs 50, making wave 1 difficult but winnable. Tower selection and upgrade UI are polished. All features implemented. [Screenshot](gml5/screenshot.png) |
-| Kimi K2.5 | ✓ | ✓ | |
+| Kimi K2.5 | ✓ | ✗ | Reasonable UX with clear tower selection. Critical bug: enemies cannot be killed - health goes negative instead of dying when reaching 0. Game becomes unplayable as enemies persist indefinitely despite taking damage. [Screenshot](kimi-k2.5/screenshot.png) |
 | MiniMax M2.7 | ✓ | ✓ | |
 | Qwen 3 Coder Next | ✓ | ✓ | |
 | Qwen 3.5 27B | ✓ | ✓ | |
