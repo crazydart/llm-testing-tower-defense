@@ -46,6 +46,7 @@ llm-testing-tower-defense/
 | Qwen 3 Coder Next | ✓ | ✓ | |
 | Qwen 3.5 27B | ✓ | ✓ | |
 | Qwen 3.5 35B | ✓ | ✗ | Good UX design with nice visuals, but has critical bugs. Crashes with "Cannot read properties of undefined (reading 'clientX')" - mouse event tracking not properly initialized. Requires server to run due to resource loading issues. [Screenshot](qwen35-35b-a3b/screenshot.png) |
+| Qwen 3.5 397B | ✓ | ~ | Good initial UX with polished design. Starts functional but deteriorates quickly. Visual glitch when clicking tower to upgrade (stretching effect). Click handling breaks after initial interaction - clicking towers places new towers instead of upgrading. [Screenshot](qwen35-397b/screenshot.png) |
 
 More models will be added over time.
 
