@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Tower Defense Game</title>
+  <style>
+    #game-container {
+      width: 1000px;
+      height: 600px;
+      border: 1px solid black;
+    }
+
+    #game-canvas {
+      width: 1000px;
+      height: 600px;
+      border: 1px solid black;
+    }
+
+    #ui-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 1000px;
+      height: 600px;
+    }
+
+    #currency-container {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+    }
+
+    #tower-container {
+      position: absolute;
+      top: 50px;
+      left: 10px;
+    }
+
+    #upgrade-container {
+      position: absolute;
+      top: 100px;
+      left: 10px;
+    }
+
+    button {
+      width: 100px;
+      height: 30px;
+      margin: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div id="game-container">
+    <canvas id="game-canvas" width="1000" height="600"></canvas>
+    <div id="ui-container">
+      <div id="currency-container">
+        <span id="currency-label">Currency:</span>
+        <span id="currency-value">100</span>
+      </div>
+      <div id="tower-container">
+        <button id="basic-tower-button">Basic Tower</button>
+        <button id="fast-tower-button">Fast Tower</button>
+        <button id="strong-tower-button">Strong Tower</button>
+      </div>
+      <div id="upgrade-container">
+        <button id="upgrade-button">Upgrade</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Game variables
+    let currency = 100;
+    let wave = 1;
+    let enemies = [];
+    let towers = [];
+
+    // Tower types
+    const TOWER_TYPES = {
+      BASIC: 'basic',
+      FAST: 'fast',
+      STRONG: 'strong'
+    };
+
+    // Tower upgrades
+    const TOWER_UPGRADES = {
+      BASIC: {
+        LEVEL_1: {
+          damage: 10,
+          range: 100,
+          cost: 20
+        },
+        LEVEL_2: {
+          damage: 15,
+          range: 150,
+          cost: 40
+        },
+        LEVEL_3: {
+          damage: 20,
+          range: 200,
+          cost: 60
+        }
+      },
+      FAST: {
+        LEVEL_1: {
+          damage: 5,
+          range: 50,
+          cost: 15
+        },
+        LEVEL_2: {
+          damage: 10,
+          range: 100,
+          cost: 30
+        },
+        LEVEL_3: {
+          damage: 15,
+          range: 150,
+          cost: 45
+        }
+      },
+      STRONG: {
+        LEVEL_1: {
+          damage: 20,
+          range: 200,
+          cost: 30
+        },
+        LEVEL_2: {
+          damage: 30,
+          range: 250,
+          cost: 50
+        },
+        LEVEL_3: {
+          damage: 40,
+          range: 300,
+          cost: 70
+        }
+      }
+    };
+
+    // Enemy types
+    const ENEMY_TYPES = {
+      BASIC: 'basic',
+      FAST: 'fast'
+    };
+
+    // Enemy properties
+    const ENEMY_PROPERTIES = {
+      BASIC: {
+        health: 100,
+        speed: 2,
+        reward: 10
+      },
+      FAST: {
+        health: 50,
+        speed: 4,
+        reward: 20
+      }
+    };
+
+    // Game loop
+    function update() {
+      // Update towers
+      towers.forEach(tower => {
+        // Update tower's range and damage
+        tower.range = TOWER_UPGRADES[tower.type][tower.level].range;
+        tower.damage = TOWER_UPGRADES[tower.type][tower.level].damage;
+      });
+
+      // Update enemies
+      enemies.forEach(enemy => {
+        // Move enemy
+        enemy.x += enemy.speed;
+
+        // Check if enemy is out of range
+        if (enemy.x > 1000) {
+          // Remove enemy
+          enemies.splice(enemies.indexOf(enemy), 1);
+        }
+      });
+
+      // Check if wave is over
+      if (enemies.length === 0 && wave <= 10) {
+        // Start next wave
+        startWave();
+      }
+    }
+
+    // Start wave
+    function startWave() {
+      // Increase wave number
+      wave++;
+
+      // Add enemies to wave
+      for (let i = 0; i < wave; i++) {
+        // Randomly select enemy type
+        const enemyType = Math.random() < 0.5 ? ENEMY_TYPES.BASIC : ENEMY_TYPES.FAST;
+
+        // Create enemy
+        const enemy = {
+          type: enemyType,
+          x: 0,
+          health: ENEMY_PROPERTIES[enemyType].health,
+          speed: ENEMY_PROPERTIES[enemyType].speed,
+          reward: ENEMY_PROPERTIES[enemyType].reward
+        };
+
+        // Add enemy to enemies array
+        enemies.push(enemy);
+      }
+    }
+
+    // Initialize game
+    function init() {
+      // Start first wave
+      startWave();
+
+      // Set up game loop
+      setInterval(update, 1000 / 60);
+    }
+
+    // Initialize game
+    init();
+
+    // Add event listeners to tower buttons
+    document.getElementById('basic-tower-button').addEventListener('click', () => {
+      // Create basic tower
+      const tower = {
+        type: TOWER_TYPES.BASIC,
+        level: 'LEVEL_1',
+        x: 100,
+        y: 100
+      };
+
+      // Add tower to towers array
+      towers.push(tower);
+
+      // Update currency
+      currency -= TOWER_UPGRADES[TOWER_TYPES.BASIC]['LEVEL_1'].cost;
+      document.getElementById('currency-value').innerText = currency;
+    });
+
+    document.getElementById('fast-tower-button').addEventListener('click', () => {
+      // Create fast tower
+      const tower = {
+        type: TOWER_TYPES.FAST,
+        level: 'LEVEL_1',
+        x: 200,
+        y: 100
+      };
+
+      // Add tower to towers array
+      towers.push(tower);
+
+      // Update currency
+      currency -= TOWER_UPGRADES[TOWER_TYPES.FAST]['LEVEL_1'].cost;
+      document.getElementById('currency-value').innerText = currency;
+    });
+
+    document.getElementById('strong-tower-button').addEventListener('click', () => {
+      // Create strong tower
+      const tower = {
+        type: TOWER_TYPES.STRONG,
+        level: 'LEVEL_1',
+        x: 300,
+        y: 100
+      };
+
+      // Add tower to towers array
+      towers.push(tower);
+
+      // Update currency
+      currency -= TOWER_UPGRADES[TOWER_TYPES.STRONG]['LEVEL_1'].cost;
+      document.getElementById('currency-value').innerText = currency;
+    });
+
+    // Add event listener to upgrade button
+    document.getElementById('upgrade-button').addEventListener('click', () => {
+      // Get selected tower
+      const selectedTower = towers[0];
+
+      // Upgrade tower
+      if (selectedTower.level === 'LEVEL_1') {
+        selectedTower.level = 'LEVEL_2';
+      } else if (selectedTower.level === 'LEVEL_2') {
+        selectedTower.level = 'LEVEL_3';
+      }
+
+      // Update currency
+      currency -= TOWER_UPGRADES[selectedTower.type][selectedTower.level].cost;
+      document.getElementById('currency-value').innerText = currency;
+    });
+  </script>
+</body>
+</html>
