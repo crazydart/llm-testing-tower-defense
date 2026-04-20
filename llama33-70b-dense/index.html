@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tower Defense Game</title>
+    <style>
+        /* Add styles here */
+    </style>
+</head>
+<body>
+    <canvas id="game-canvas" width="800" height="600"></canvas>
+    <script>
+        // Game logic goes here
+        let currency = 100;
+        let towers = [
+            { type: "tower1", level: 1, damage: 10 },
+            { type: "tower2", level: 1, damage: 20 },
+            { type: "tower3", level: 1, damage: 30 }
+        ];
+        let enemies = [
+            { type: "enemy1", health: 50, speed: 2 },
+            { type: "enemy2", health: 100, speed: 1 }
+        ];
+        let waves = [
+            { enemies: ["enemy1", "enemy1", "enemy1"], delay: 1000 },
+            { enemies: ["enemy2", "enemy2"], delay: 2000 },
+            { enemies: ["enemy1", "enemy1", "enemy1", "enemy1"], delay: 3000 },
+            { enemies: ["enemy2", "enemy2", "enemy2"], delay: 4000 },
+            { enemies: ["enemy1", "enemy1", "enemy1", "enemy1", "enemy1"], delay: 5000 },
+            { enemies: ["enemy2", "enemy2", "enemy2", "enemy2"], delay: 6000 },
+            { enemies: ["enemy1", "enemy1", "enemy1", "enemy1", "enemy1", "enemy1"], delay: 7000 },
+            { enemies: ["enemy2", "enemy2", "enemy2", "enemy2", "enemy2"], delay: 8000 },
+            { enemies: ["enemy1", "enemy1", "enemy1", "enemy1", "enemy1", "enemy1", "enemy1"], delay: 9000 },
+            { enemies: ["enemy2", "enemy2", "enemy2", "enemy2", "enemy2", "enemy2"], delay: 10000 }
+        ];
+        // ... rest of game logic ...
+    </script>
+</body>
+</html>
