@@ -31,26 +31,39 @@ llm-testing-tower-defense/
 │   └── [other assets as generated]
 ```
 
+## Scoring Methodology
+
+Each tested model is scored across 6 categories totaling 100 points:
+
+| Category | Points | What it measures |
+|----------|-------:|------------------|
+| Functional Completeness | 20 | All required features (3 towers × 3 levels, 2 enemies, 10 waves, currency) |
+| Playability | 20 | Game playable start to finish |
+| Bug-free | 15 | No crashes, broken mechanics, or critical UI bugs |
+| Balance | 15 | Wins/losses feel earned, difficulty curve makes sense |
+| Visuals/UX | 15 | Polish, layout, clarity, look and feel |
+| Creativity | 15 | Unique/interesting design choices (path style, mechanics, theme) |
+
 ## Tested Models
 
-| Model | Tested | Success | Notes |
-|-------|--------|---------|-------|
-| Claude Haiku 4.5 | ✓ | ~ | Single HTML file. Auto-starts waves on page load (no player control). Severe balance issues with excessive currency earnings. Waves incorrectly go to 11/10. Tower placement allows placement on track (should be prevented). Jagged enemy path is unique but visually basic. [Wave 1](haiku/screenshot-wave1.png) [Wave 3](haiku/screenshot-wave3.png) [Wave 11](haiku/screenshot-wave11.png) |
-| Claude Opus 4.7 | ✓ | ✓ | Single HTML file implementation. Excellent with free tower placement (not grid-based). Well-balanced throughout all 10 waves. Good graphics and smooth performance. Tower radius visualization and collision detection both work correctly. All features implemented. [Screenshot](opus47/screenshot.png) |
-| Claude Sonnet 4.6 | ✓ | ✓ | Single HTML file. Grid-based tower placement with snap-to-grid mechanics. Limiting but works well and feels polished. Game UI centers on screen (distinguishing feature). Very balanced gameplay that becomes challenging. All features implemented. [Screenshot](sonnet46/screenshot.png) |
-| DeepSeek V3.1 671B | ✓ | ✗ | Tower placement is offset from click location making accurate placement difficult. Game balance is way off - cannot kill first wave. [Screenshot](deepseek-v3.1-671b/screenshot.png) |
-| DeepSeek V3.2 | ✓ | ✓ | Developed with server infrastructure and documentation. Game runs smoothly; balance breaks around wave 7 due to excess currency. Level frame UI bug (off-screen). All features implemented. [Screenshot](deepseek-v3.2/screenshot.png) |
-| Gemma 4 31B | ✓ | ~ | Full-window UX. Click coordinate offset makes tower placement difficult and inaccurate. Unique design choice: tower placement disabled during waves (only allowed between waves). Clear UI with good tower descriptions. [Screenshot](gemma4-31b/screenshot.png) |
-| GLM 5.1 | ✓ | ✓ | Good UX with grid-based placement. Challenging balance: starts with 30 gold but cheapest tower costs 50, making wave 1 difficult but winnable. Tower selection and upgrade UI are polished. All features implemented. [Screenshot](gml5/screenshot.png) |
-| Kimi K2.5 | ✓ | ✗ | Reasonable UX with clear tower selection. Critical bug: enemies cannot be killed - health goes negative instead of dying when reaching 0. Game becomes unplayable as enemies persist indefinitely despite taking damage. [Screenshot](kimi-k2.5/screenshot.png) |
-| Kimi K2.6 | ✓ | ✓ | Game works perfectly. Grid-based placement (not free place). Polished UI with stats panel, tower info, and range visualization. Slightly unbalanced - first 4 waves can be beaten with the initial set of towers without upgrades. All features implemented. [Screenshot](kimi-k2.6/screenshot.png) |
-| Llama 3.3 70B (UD-Q5_K_XL) | ✓ | ✗ | Game does not work. Crashes immediately with "Cannot read properties of undefined (reading 'health')" in startWave function. The wave initialization tries to access enemy health before the wave/enemy data is properly set up. Game unplayable. |
-| Llama 3.3 70B (Dense, OpenRouter) | ✓ | ✗ | Very basic implementation. No actual path system - enemies are just random moving blobs. No proper game mechanics. Tower placement is random (clicking button places tower at random coordinates). Plain white background with no styling. Very poor UX. Initial test had Continue plugin in Agent mode producing JSON function calls; switching to Chat mode produced this output. [Screenshot](llama33-70b-dense/screenshot.png) |
-| MiniMax M2.7 | ✓ | ✗ | Generated SPEC.md (detailed game specification) instead of actual game implementation. No HTML/JavaScript files created. When Continue AI plugin attempted to use it, got stuck in error loops trying to execute a non-functional output. |
-| Qwen 3 Coder Next | ✓ | ~ | Game board is too tall for viewport. Functionality works but unbalanced: starting with $10 while towers cost $50-$200 makes wave 1 unwinnable. Tower descriptions and UI are clear and well-organized. [Screenshot](qwen3-coder-next/screenshot.png) |
-| Qwen 3.5 27B (FP8) | ✓ | ✗ | Good UX with attractive gradient buttons. Tower placement has initial bug but works after multiple clicks. Critical issue: enemies take no damage and cannot be killed. Game is unplayable despite polished visuals. [Screenshot](qwen35-27b/screenshot.png) |
-| Qwen 3.5 35B (UD-Q8_K_XL) | ✓ | ✗ | Good UX design with nice visuals, but has critical bugs. Crashes with "Cannot read properties of undefined (reading 'clientX')" - mouse event tracking not properly initialized. Requires server to run due to resource loading issues. [Screenshot](qwen35-35b-a3b/screenshot.png) |
-| Qwen 3.5 397B | ✓ | ~ | Good initial UX with polished design. Starts functional but deteriorates quickly. Visual glitch when clicking tower to upgrade (stretching effect). Click handling breaks after initial interaction - clicking towers places new towers instead of upgrading. Tower selection buttons buggy and unreliable. [Screenshot](qwen35-397b/screenshot.png) |
+| Model | Func/20 | Play/20 | Bug/15 | Bal/15 | UX/15 | Crea/15 | **Total** | Notes |
+|-------|--------:|--------:|-------:|-------:|------:|--------:|----------:|-------|
+| Claude Haiku 4.5 | 14 | 10 | 7 | 5 | 6 | 10 | **52** | Auto-starts waves on page load (no player control). Severe balance issues with excessive currency. Waves incorrectly go to 11/10. Allows tower placement on track. Jagged enemy path is unique but basic. [Wave 1](haiku/screenshot-wave1.png) [Wave 3](haiku/screenshot-wave3.png) [Wave 11](haiku/screenshot-wave11.png) |
+| Claude Opus 4.7 | 20 | 20 | 15 | 14 | 13 | 8 | **90** | Single HTML file. Free tower placement (not grid-based). Well-balanced throughout 10 waves. Good graphics, smooth performance. Tower radius visualization and collision detection work correctly. [Screenshot](opus47/screenshot.png) |
+| Claude Sonnet 4.6 | 20 | 20 | 15 | 14 | 12 | 10 | **91** | Single HTML file. Grid-based tower placement with snap-to-grid. Game UI centers on screen (unique). Very balanced gameplay that becomes challenging. [Screenshot](sonnet46/screenshot.png) |
+| DeepSeek V3.1 671B | 12 | 4 | 5 | 3 | 8 | 5 | **37** | Tower placement offset from click location. Cannot kill first wave. [Screenshot](deepseek-v3.1-671b/screenshot.png) |
+| DeepSeek V3.2 | 20 | 17 | 10 | 8 | 11 | 13 | **79** | Developed with server infrastructure and documentation (uniquely creative approach). Balance breaks around wave 7 due to excess currency. Level frame UI bug (off-screen). [Screenshot](deepseek-v3.2/screenshot.png) |
+| Gemma 4 31B | 17 | 12 | 8 | 10 | 9 | 12 | **68** | Full-window UX. Click coordinate offset makes placement difficult. Unique design: tower placement only between waves (not during). Clear tower descriptions. [Screenshot](gemma4-31b/screenshot.png) |
+| GLM 5.1 | 20 | 18 | 14 | 12 | 12 | 7 | **83** | Grid-based placement. Challenging balance: starts with 30 gold but cheapest tower costs 50, making wave 1 difficult but winnable. Polished tower selection/upgrade UI. [Screenshot](gml5/screenshot.png) |
+| Kimi K2.5 | 8 | 2 | 1 | 2 | 9 | 5 | **27** | Critical bug: enemies cannot be killed - health goes negative instead of dying. Game unplayable as enemies persist indefinitely. [Screenshot](kimi-k2.5/screenshot.png) |
+| Kimi K2.6 | 20 | 20 | 15 | 11 | 13 | 8 | **87** | Game works perfectly. Grid-based placement. Polished UI with stats panel, tower info, range visualization. Slightly easy - first 4 waves beatable with initial towers. [Screenshot](kimi-k2.6/screenshot.png) |
+| Llama 3.3 70B (UD-Q5_K_XL) | 5 | 0 | 0 | 0 | 0 | 0 | **5** | Crashes immediately with "Cannot read properties of undefined (reading 'health')" in startWave function. Game unplayable. |
+| Llama 3.3 70B (Dense, OpenRouter) | 5 | 3 | 5 | 2 | 2 | 2 | **19** | Very basic. No actual path system - enemies are random moving blobs. Random tower placement (clicking button places at random coordinates). Plain white background, no styling. Required Chat mode workaround due to Continue plugin issues. [Screenshot](llama33-70b-dense/screenshot.png) |
+| MiniMax M2.7 | 0 | 0 | 0 | 0 | 0 | 2 | **2** | Generated SPEC.md (detailed game specification) instead of actual game implementation. No HTML/JavaScript files. Continue AI plugin got stuck in error loops. |
+| Qwen 3 Coder Next | 16 | 8 | 8 | 4 | 10 | 6 | **52** | Game board too tall for viewport. Functions but severely unbalanced - wave 1 unwinnable due to currency vs tower cost gap. Clear UI organization. [Screenshot](qwen3-coder-next/screenshot.png) |
+| Qwen 3.5 27B (FP8) | 14 | 3 | 2 | 2 | 11 | 7 | **39** | Attractive gradient buttons. Tower placement bug requires multiple clicks. Critical issue: enemies take no damage. Unplayable despite polished visuals. [Screenshot](qwen35-27b/screenshot.png) |
+| Qwen 3.5 35B (UD-Q8_K_XL) | 12 | 0 | 0 | 0 | 10 | 5 | **27** | Good UX design but crashes with "Cannot read properties of undefined (reading 'clientX')" - mouse event tracking not initialized. Requires server. [Screenshot](qwen35-35b-a3b/screenshot.png) |
+| Qwen 3.5 397B | 16 | 8 | 5 | 7 | 10 | 6 | **52** | Good initial UX, polished design. Visual glitch on tower upgrade click (stretching). Click handling breaks - clicking towers places new towers instead of upgrading. Tower selection buttons unreliable. [Screenshot](qwen35-397b/screenshot.png) |
 
 More models will be added over time.
 
